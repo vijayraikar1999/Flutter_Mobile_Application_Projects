@@ -10,26 +10,12 @@ Inside the lib directory I add the demo about all the features available in Flut
 If you want to check them then just change the home property to the widget from the the dart file you wanna check.
 
 for example:
-// This is the home property I was talking about. so if I wanna see the example about Container then simply assign the widget ContainerWidgetExample from          // the container_widget_exmaple.dart file. and you can check out all the other dart files present in the lib folder and change the home to the widget from         // the file as you want.
-      
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:test_app/1_scaffold_widget.dart';
-import 'package:test_app/2_container_widget.dart';
-void main() {
-  runApp(MyApp());
-}
+// This is the home property I was talking about which is present in main.dart file inside the MaterialApp Widget. so if I wanna see the example about Container
+// then simply assign the widget ContainerWidgetExample from
+// the container_widget_exmaple.dart file. and you can check out all the other dart files present in the lib folder and change the home to the widget from         // the file as you want.
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: ContainerWidgetExample(),
-    );
-  }
-}
-
+   
 
 A few resources to get you started if this is your first Flutter project:
 
