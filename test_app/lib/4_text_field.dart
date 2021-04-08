@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
-class TextFieldExample extends StatelessWidget {
+class TextFieldExample extends StatefulWidget {
+  @override
+  _TextFieldExampleState createState() => _TextFieldExampleState();
+}
+
+class _TextFieldExampleState extends State<TextFieldExample> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,6 +22,7 @@ class TextFieldExample extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextField(
+                controller: nameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'User Name',
@@ -24,6 +33,7 @@ class TextFieldExample extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -36,7 +46,27 @@ class TextFieldExample extends StatelessWidget {
               textColor: Colors.white,
               color: Colors.blue,
               child: Text('Sign In'),
-              onPressed: () {},
+              onPressed: () {
+                return showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Alert Message'),
+                      content: Text(nameController.text),
+                      actions: [
+                        FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            'OK',
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
             )
           ],
         ),
