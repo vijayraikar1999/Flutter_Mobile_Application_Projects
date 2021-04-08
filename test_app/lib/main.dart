@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/1_scaffold_widget.dart';
 import 'package:test_app/2_container_widget.dart';
+import 'package:test_app/3_row_column.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ContainerWidgetExample(),
+      home: RowColumnExample(),
     );
   }
 }
