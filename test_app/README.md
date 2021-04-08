@@ -7,7 +7,7 @@ A new Flutter application.
 This project is a starting point for a Flutter application.
 In this project I work on learning Flutter in more detail.
 Inside the lib directory I add the demo about all the features available in Flutter.
-If you want to check them then just change the property to the widget from the the dart file you wanna check.
+If you want to check them then just change the home property to the widget from the the dart file you wanna check.
 
 for example:
 
