@@ -11,7 +11,7 @@ If you want to check them then just change the home property to the widget from 
 
 for example:
 This is the home property I was talking about which is present in main.dart file inside the MaterialApp Widget. so if I wanna see the example about Container then simply assign the widget ContainerWidgetExample from
-the container_widget_exmaple.dart file. and you can check out all the other dart files present in the lib folder and change the home to the widget from         // the file as you want.
+the container_widget_exmaple.dart file. and you can check out all the other dart files present in the lib folder and change the home to the widget from the file as you want.
 
       home: ContainerWidgetExample(),
    
