@@ -109,12 +109,19 @@ class HomePage extends StatelessWidget {
   }
 }
 
-_buildPost(String _name, String imagePath, String personImage) {
-  return Expanded(
-    child: Container(
-      child: ListView.builder(
-        itemBuilder: (BuildContext context, int index) {},
-      ),
+_buildPost() {
+  return Container(
+    margin: EdgeInsets.all(
+      15.0,
+    ),
+    height: 400.0,
+    color: Colors.white,
+    child: Column(
+      children: [
+        Row(
+          children: [],
+        ),
+      ],
     ),
   );
 }
