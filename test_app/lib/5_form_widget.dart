@@ -31,18 +31,27 @@ class MyCustomFormState extends State<MyCustomForm> {
                   icon: Icon(Icons.person),
                   hintText: 'Enter your name',
                   labelText: 'Name'),
+              validator: (value) {
+                return 'Please enter some text';
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
                   icon: Icon(Icons.phone),
                   hintText: 'Enter a phone number',
                   labelText: 'Phone'),
+              validator: (value) {
+                return 'Please enter a valid phone number';
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
                   icon: Icon(Icons.person),
                   hintText: 'Enter your date of birth',
                   labelText: 'DOB'),
+              validator: (value) {
+                return 'Please enter valid date';
+              },
             ),
             Center(
               child: Container(
@@ -50,7 +59,15 @@ class MyCustomFormState extends State<MyCustomForm> {
                   top: 40,
                 ),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      Scaffold.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Data is in processing.'),
+                        ),
+                      );
+                    }
+                  },
                   child: Text(
                     'Submit',
                   ),
