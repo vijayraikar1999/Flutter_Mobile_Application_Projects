@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:quiz_app_flutter/controllers/question_controller.dart';
 import 'package:websafe_svg/websafe_svg.dart';
 import '../../../constants.dart';
 
@@ -19,31 +21,37 @@ class ProgressBar extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(50.0),
       ),
-      child: Stack(
-        children: [
-          LayoutBuilder(
-            builder: (context, constraints) => Container(
-              width: constraints.maxWidth * 0.5,
-              decoration: BoxDecoration(
-                gradient: kPrimaryGradient,
-                borderRadius: BorderRadius.circular(50.0),
+      child: GetBuilder<QuestionController>(
+        init: QuestionController(),
+        builder: (controller) {
+          print(controller.animation.value);
+          return Stack(
+            children: [
+              LayoutBuilder(
+                builder: (context, constraints) => Container(
+                  width: constraints.maxWidth * 0.5,
+                  decoration: BoxDecoration(
+                    gradient: kPrimaryGradient,
+                    borderRadius: BorderRadius.circular(50.0),
+                  ),
+                ),
               ),
-            ),
-          ),
-          Positioned.fill(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('18 Sec'),
-                  WebsafeSvg.asset('assets/icons/clock.svg')
-                ],
-              ),
-            ),
-          )
-        ],
+              Positioned.fill(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: kDefaultPadding / 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('18 Sec'),
+                      WebsafeSvg.asset('assets/icons/clock.svg')
+                    ],
+                  ),
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }
