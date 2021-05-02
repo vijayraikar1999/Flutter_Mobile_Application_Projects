@@ -1,17 +1,21 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/6_animation_example1.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AnimationExample1(),
+      title: 'WhatsApp',
+      theme: ThemeData(
+        primaryColor: Color(0xFF075E54),
+        accentColor: Color(0xFF250366),
+      ),
+      home:
     );
   }
 }
+
