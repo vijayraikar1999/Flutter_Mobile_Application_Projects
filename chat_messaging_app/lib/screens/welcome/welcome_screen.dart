@@ -1,4 +1,5 @@
 import 'package:chat_messaging_app/constants.dart';
+import 'package:chat_messaging_app/screens/welcome/signinOrSignUp/signin_or_signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -35,7 +36,14 @@ class WelcomeScreen extends StatelessWidget {
             Spacer(flex: 3),
             FittedBox(
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return SigninOrSignupScreen();
+                    }),
+                  );
+                },
                 child: Row(
                   children: [
                     Text(
