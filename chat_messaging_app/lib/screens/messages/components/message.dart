@@ -1,8 +1,10 @@
 import 'package:chat_messaging_app/models/ChatMessage.dart';
 import 'package:chat_messaging_app/screens/messages/components/text_message.dart';
+import 'package:chat_messaging_app/screens/messages/components/video_message.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
+import 'audio_message.dart';
 
 class Message extends StatelessWidget {
   const Message({
@@ -21,6 +23,9 @@ class Message extends StatelessWidget {
           break;
         case ChatMessageType.audio:
           return AudioMessage(message: message);
+          break;
+        case ChatMessageType.video:
+          return VideoMessage(message: message);
           break;
         default:
           return SizedBox();
@@ -43,72 +48,51 @@ class Message extends StatelessWidget {
             SizedBox(width: kDefaultPadding / 2),
           ],
           messageContent(message),
+          if (message.isSender)
+            MessageStatusDot(
+              status: message.messageStatus,
+            ),
         ],
       ),
     );
   }
 }
 
-class AudioMessage extends StatelessWidget {
-  const AudioMessage({Key key, this.message}) : super(key: key);
+class MessageStatusDot extends StatelessWidget {
+  const MessageStatusDot({Key key, this.status}) : super(key: key);
 
-  final ChatMessage message;
+  final MessageStatus status;
 
   @override
   Widget build(BuildContext context) {
+    Color dotColor(MessageStatus status) {
+      switch (status) {
+        case MessageStatus.not_sent:
+          return kErrorColor;
+          break;
+        case MessageStatus.not_view:
+          return Theme.of(context).textTheme.bodyText1.color.withOpacity(0.1);
+          break;
+        case MessageStatus.viewed:
+          return kPrimaryColor;
+        default:
+          return Colors.transparent;
+      }
+    }
+
     return Container(
-      width: MediaQuery.of(context).size.width * 0.55,
-      height: 40.0,
-      padding: EdgeInsets.symmetric(
-        horizontal: kDefaultPadding * 0.75,
-        vertical: kDefaultPadding / 2.5,
-      ),
+      margin: EdgeInsets.only(
+          left: kDefaultPadding / 2, right: kDefaultPadding / 4),
+      height: 12.0,
+      width: 12.0,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30.0),
-        color: kPrimaryColor.withOpacity(message.isSender ? 1 : 0.1),
+        color: dotColor(status),
+        shape: BoxShape.circle,
       ),
-      child: Row(
-        children: [
-          Icon(
-            Icons.play_arrow,
-            color: message.isSender ? Colors.white : kPrimaryColor,
-          ),
-          Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: kDefaultPadding / 2),
-              child: Stack(
-                clipBehavior: Clip.none,
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    width: double.infinity,
-                    height: 2,
-                    color: kPrimaryColor.withOpacity(0.4),
-                  ),
-                  Positioned(
-                    left: 0,
-                    child: Container(
-                      height: 8.0,
-                      width: 8.0,
-                      decoration: BoxDecoration(
-                        color: kPrimaryColor,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Text(
-            '0.37',
-            style: TextStyle(
-              fontSize: 12,
-              color: message.isSender ? Colors.white : null,
-            ),
-          ),
-        ],
+      child: Icon(
+        status == MessageStatus.not_sent ? Icons.close : Icons.done,
+        size: 8.0,
+        color: Theme.of(context).scaffoldBackgroundColor,
       ),
     );
   }
