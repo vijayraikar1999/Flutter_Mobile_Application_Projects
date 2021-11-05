@@ -128,27 +128,69 @@ class MyApp extends StatelessWidget {
     required String description,
     String? visitLink,
   }) {
-    return Card(
-      child: Column(
-        children: [
-          Image.asset(
-            imageUrl,
-            fit: BoxFit.cover,
-            height: 200.0,
-            width: 350.0,
+    return Container(
+      constraints: BoxConstraints(maxWidth: 350.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+          side: const BorderSide(
+            color: kDarkGrey,
           ),
-          Text(
-            title,
-            style: TextStyle(
-              color: kDarkGrey,
-              fontWeight: FontWeight.w800,
-              fontSize: 20.0,
+        ),
+        elevation: 2,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              imageUrl,
+              fit: BoxFit.cover,
+              height: 200.0,
+              width: 350.0,
             ),
-          ),
-          Text(
-            description,
-          ),
-        ],
+            SizedBox(
+              width: double.infinity,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                        color: kDarkGrey,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20.0,
+                      ),
+                    ),
+                    SizedBox(height: 4.0),
+                    Text(
+                      description,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            if (visitLink != null)
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 16.0, bottom: 10.0, right: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () => _openUrl(visitLink),
+                      child: Text('VISIT'),
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -168,14 +210,35 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
+          const SizedBox(height: 16.0),
           Wrap(
             alignment: WrapAlignment.center,
+            spacing: 16.0,
+            runSpacing: 16.0,
             children: [
               _renderProjectCard(
-                imageUrl: 'assets/projects/pokedox.png',
+                imageUrl: 'assets/projects/pokedex.png',
                 title: 'Pokedex',
                 description: 'Pokemon explorer build with flutter',
                 visitLink: 'https://pokedexweb.surge.sh',
+              ),
+              _renderProjectCard(
+                imageUrl: 'assets/projects/cryptospace.png',
+                title: 'Cryptospace',
+                description: 'Cryptocurrency tracker',
+                visitLink: 'https://cryptospace.surge.sh',
+              ),
+              _renderProjectCard(
+                imageUrl: 'assets/projects/notable.png',
+                title: 'Notable',
+                description: 'Note-taking made simple',
+                visitLink: 'https://notable.surge.sh',
+              ),
+              _renderProjectCard(
+                imageUrl: 'assets/projects/chatly.png',
+                title: 'Chatly',
+                description: 'Real-time chat',
+                visitLink: 'https://chatly.surge.sh',
               ),
             ],
           ),
@@ -185,7 +248,20 @@ class MyApp extends StatelessWidget {
   }
 
   Widget _footer() {
-    return SizedBox.shrink();
+    return Container(
+      color: kBlackColor,
+      padding: const EdgeInsets.all(32.0),
+      child: Row(
+        children: [
+          Text(
+            'Made By Vijay Raikar',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -211,12 +287,18 @@ class MyApp extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              _header(),
-              const SizedBox(height: 24.0),
-              _badges(),
+              Container(
+                constraints: BoxConstraints(maxWidth: 800.0),
+                child: Column(
+                  children: [
+                    _header(),
+                    const SizedBox(height: 24.0),
+                    _badges(),
+                  ],
+                ),
+              ),
               const SizedBox(height: 32.0),
               _projects(),
-              const SizedBox(height: 300.0),
               _footer(),
             ],
           ),
