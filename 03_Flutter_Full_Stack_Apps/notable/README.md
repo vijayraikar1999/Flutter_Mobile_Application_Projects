@@ -2,6 +2,6 @@
 
 A new Flutter project.
 
-![Notable App](./assets/images/log.png)
+!(Notable App)[./assets/images/log.png]
 
 This app is uploaded in surge at: https://notable_flutter_app.surge.sh/#add_note_screen
