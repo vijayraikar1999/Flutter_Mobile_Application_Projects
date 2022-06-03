@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:taskly/models/task.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,6 +13,8 @@ class _HomePageState extends State<HomePage> {
   late double _deviceHeight, _deviceWidth;
 
   String? _newTaskContent;
+
+  Box? _box;
 
   @override
   Widget build(BuildContext context) {
@@ -36,22 +39,30 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _taskList() {
-    return ListView(
-      children: [
-        ListTile(
-          title: const Text(
-            'Do Laundry!',
-            style: TextStyle(decoration: TextDecoration.lineThrough),
+    List tasks = _box!.values.toList();
+    return ListView.builder(
+      itemCount: tasks.length,
+      itemBuilder: (context, index) {
+        var task = Task.fromMap(tasks[index]);
+
+        return ListTile(
+          title: Text(
+            task.content,
+            style: TextStyle(
+              decoration: task.done ? TextDecoration.lineThrough : null,
+            ),
           ),
           subtitle: Text(
-            DateTime.now().toString(),
+            task.timestamp.toString(),
           ),
-          trailing: const Icon(
-            Icons.check_box_outlined,
+          trailing: Icon(
+            task.done
+                ? Icons.check_box_outlined
+                : Icons.check_box_outline_blank_outlined,
             color: Colors.red,
           ),
-        ),
-      ],
+        );
+      },
     );
   }
 
@@ -78,7 +89,20 @@ class _HomePageState extends State<HomePage> {
                 },
               );
             },
-            onSubmitted: (_value) {},
+            onSubmitted: (_value) {
+              if (_newTaskContent != null) {
+                var _task = Task(
+                  content: _newTaskContent!,
+                  timestamp: DateTime.now(),
+                  done: false,
+                );
+                _box!.add(_task.toMap());
+                setState(() {
+                  _newTaskContent = null;
+                  Navigator.pop(context);
+                });
+              }
+            },
           ),
         );
       },
@@ -90,6 +114,7 @@ class _HomePageState extends State<HomePage> {
       future: Hive.openBox('tasks'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
+          _box = snapshot.data as Box?;
           return _taskList();
         } else {
           return const Center(
