@@ -61,6 +61,15 @@ class _HomePageState extends State<HomePage> {
                 : Icons.check_box_outline_blank_outlined,
             color: Colors.red,
           ),
+          onTap: () {
+            task.done = !task.done;
+            _box!.putAt(index, task.toMap());
+            setState(() {});
+          },
+          onLongPress: () {
+            _box!.deleteAt(index);
+            setState(() {});
+          },
         );
       },
     );
@@ -113,7 +122,7 @@ class _HomePageState extends State<HomePage> {
     return FutureBuilder(
       future: Hive.openBox('tasks'),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasData) {
           _box = snapshot.data as Box?;
           return _taskList();
         } else {
