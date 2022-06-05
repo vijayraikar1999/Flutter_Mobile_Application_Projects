@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:coincap/pages/details_page.dart';
 import 'package:coincap/services/http_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -15,6 +16,8 @@ class _HomePageState extends State<HomePage> {
   double? _deviceHeight, _deviceWidth;
 
   HTTPService? _http;
+
+  String _coinCurrnecy = 'bitcoin';
 
   @override
   void initState() {
@@ -44,7 +47,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _selectedCoinDropdown() {
-    List<String> _coins = ['bitcoin'];
+    List<String> _coins = [
+      'bitcoin',
+      'ethereum',
+      'tether',
+      'cardano',
+      'ripple',
+    ];
     List<DropdownMenuItem<String>> _items = _coins
         .map(
           (e) => DropdownMenuItem(
@@ -61,9 +70,13 @@ class _HomePageState extends State<HomePage> {
         )
         .toList();
     return DropdownButton(
-      value: _coins.first,
+      value: _coinCurrnecy,
       items: _items,
-      onChanged: (_value) {},
+      onChanged: (_value) {
+        setState(() {
+          _coinCurrnecy = _value.toString();
+        });
+      },
       dropdownColor: const Color.fromRGBO(83, 88, 206, 1.0),
       iconSize: 30.0,
       icon: const Icon(
@@ -76,20 +89,30 @@ class _HomePageState extends State<HomePage> {
 
   Widget _dataWidgets() {
     return FutureBuilder(
-      future: _http!.get('/coins/bitcoin'),
+      future: _http!.get('/coins/$_coinCurrnecy'),
       builder: (_context, _snapshot) {
         if (_snapshot.hasData) {
           Map _data = jsonDecode(_snapshot.data.toString());
 
           num _usdPrice = _data['market_data']['current_price']['usd'];
           num _change24h = _data['market_data']['price_change_percentage_24h'];
-
+          Map _exchangeRates = _data['market_data']['current_price'];
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _coinImageWidget(_data['image']['large']),
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_context) => DetailsPage(rates: _exchangeRates),
+                  ),
+                ),
+                child: _coinImageWidget(
+                  _data['image']['large'],
+                ),
+              ),
               _currentPriceWidget(_usdPrice),
               _percentageChangeWidget(_change24h),
               _descriptionCardWidget(_data['description']['en']),
@@ -148,6 +171,7 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.symmetric(vertical: _deviceHeight! * 0.05),
       padding: EdgeInsets.symmetric(
           vertical: _deviceHeight! * 0.01, horizontal: _deviceHeight! * 0.01),
+      // color: Colors.teal,
       color: const Color.fromRGBO(83, 88, 206, 0.5),
       child: Text(
         _description,

@@ -43,7 +43,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'CoinCap',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.teal,
+        // scaffoldBackgroundColor: Colors.teal,
         scaffoldBackgroundColor: const Color.fromRGBO(88, 60, 197, 1.0),
       ),
       home: const HomePage(),
