@@ -3,7 +3,12 @@ import 'package:frivia_app_flutter/providers/game_page_provider.dart';
 import 'package:provider/provider.dart';
 
 class GamePage extends StatelessWidget {
-  GamePage({Key? key}) : super(key: key);
+  final String difficultyLevel;
+
+  GamePage({
+    Key? key,
+    required this.difficultyLevel,
+  }) : super(key: key);
 
   double? _deviceHeight, _deviceWidth;
 
@@ -14,32 +19,38 @@ class GamePage extends StatelessWidget {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
     return ChangeNotifierProvider(
-      create: (_context) => GamePageProvider(context: context),
+      create: (_context) => GamePageProvider(
+        context: context,
+        difficultyLevel: difficultyLevel,
+      ),
       child: _buildUI(),
     );
   }
 
   Widget _buildUI() {
-    return Builder(builder: (_context) {
-      _pageProvider = _context.watch<GamePageProvider>();
+    return Builder(
+      builder: (_context) {
+        _pageProvider = _context.watch<GamePageProvider>();
 
-      if (_pageProvider!.questions != null) {
-        return Scaffold(
-          body: SafeArea(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: _deviceHeight! * 0.05),
-              child: _gameUI(),
+        if (_pageProvider!.questions != null) {
+          return Scaffold(
+            body: SafeArea(
+              child: Container(
+                padding:
+                    EdgeInsets.symmetric(horizontal: _deviceHeight! * 0.05),
+                child: _gameUI(),
+              ),
             ),
-          ),
-        );
-      } else {
-        return const Center(
-          child: CircularProgressIndicator(
-            color: Colors.white,
-          ),
-        );
-      }
-    });
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),
+          );
+        }
+      },
+    );
   }
 
   Widget _gameUI() {

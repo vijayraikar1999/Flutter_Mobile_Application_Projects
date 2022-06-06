@@ -9,8 +9,13 @@ class GamePageProvider extends ChangeNotifier {
   final _maxQuestions = 10;
   List? questions;
   int _currentQuestionCount = 0;
+  int _correctCount = 0;
+  final String difficultyLevel;
 
-  GamePageProvider({required this.context}) {
+  GamePageProvider({
+    required this.context,
+    required this.difficultyLevel,
+  }) {
     _dio.options.baseUrl = 'https://opentdb.com/api.php';
     _getQuestionsFromAPI();
   }
@@ -36,6 +41,8 @@ class GamePageProvider extends ChangeNotifier {
   void answerQuestion(String _answer) async {
     bool isCorrect =
         questions![_currentQuestionCount]['correct_answer'] == _answer;
+
+    _correctCount += isCorrect ? 1 : 0;
 
     _currentQuestionCount++;
     showDialog(
@@ -66,9 +73,9 @@ class GamePageProvider extends ChangeNotifier {
     showDialog(
       context: context,
       builder: (_context) {
-        return const AlertDialog(
+        return AlertDialog(
           backgroundColor: Colors.blue,
-          title: Text(
+          title: const Text(
             'End Game!',
             style: TextStyle(
               fontSize: 25.0,
@@ -76,7 +83,7 @@ class GamePageProvider extends ChangeNotifier {
             ),
           ),
           content: Text(
-            'Score: 0/0',
+            'Score: $_correctCount/$_maxQuestions',
           ),
         );
       },

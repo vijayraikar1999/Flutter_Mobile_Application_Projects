@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frivia_app_flutter/pages/game_page.dart';
+import 'package:frivia_app_flutter/pages/home_page.dart';
 
 void main() {
   runApp(
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         fontFamily: 'ArchitectsDaughter',
         scaffoldBackgroundColor: const Color.fromRGBO(31, 31, 31, 1.9),
       ),
-      home: GamePage(),
+      home: HomePage(),
     );
   }
 }
