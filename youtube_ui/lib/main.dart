@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtube_ui/screens/nav_screen.dart';
 
 void main() {
   runApp(
-    const MyApp(),
+    const ProviderScope(
+      child: MyApp(),
+    ),
   );
 }
 
