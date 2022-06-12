@@ -1,3 +1,4 @@
+import 'package:facebook_clone_responsive_ui/config/palette.dart';
 import 'package:flutter/material.dart';
 
 class CustomTabBar extends StatelessWidget {
@@ -14,6 +15,33 @@ class CustomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return TabBar(
+      onTap: onTap,
+      indicatorPadding: EdgeInsets.zero,
+      indicator: const BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Palette.facebookBlue,
+            width: 3.0,
+          ),
+        ),
+      ),
+      tabs: icons
+          .asMap()
+          .map((i, e) => MapEntry(
+                i,
+                Tab(
+                  icon: Icon(
+                    e,
+                    color: i == selectedIndex
+                        ? Palette.facebookBlue
+                        : Colors.black45,
+                    size: 30.0,
+                  ),
+                ),
+              ))
+          .values
+          .toList(),
+    );
   }
 }
