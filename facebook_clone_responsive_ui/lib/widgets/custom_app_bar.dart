@@ -11,7 +11,6 @@ class CustomAppBar extends StatelessWidget {
   final List<IconData> icons;
   final int selectedIndex;
   final Function(int) onTap;
-  final bool isBottomIndicator;
 
   const CustomAppBar({
     Key? key,
@@ -19,7 +18,6 @@ class CustomAppBar extends StatelessWidget {
     required this.icons,
     required this.selectedIndex,
     required this.onTap,
-    this.isBottomIndicator = false,
   }) : super(key: key);
 
   @override
@@ -51,6 +49,7 @@ class CustomAppBar extends StatelessWidget {
             ),
           ),
           Container(
+            height: double.infinity,
             width: 600.0,
             child: CustomTabBar(
               icons: icons,

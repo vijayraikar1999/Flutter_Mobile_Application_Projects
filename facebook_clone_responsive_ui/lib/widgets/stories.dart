@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:facebook_clone_responsive_ui/config/palette.dart';
 import 'package:facebook_clone_responsive_ui/models/user_model.dart';
+import 'package:facebook_clone_responsive_ui/widgets/responsive.dart';
 import 'package:facebook_clone_responsive_ui/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,9 @@ class Stories extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 200.0,
-      color: Colors.white,
+      color: Responsive.isDesktop(MediaQuery.of(context).size)
+          ? Colors.transparent
+          : Colors.white,
       child: ListView.builder(
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
@@ -63,6 +66,7 @@ class _StoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
         ClipRRect(
@@ -80,6 +84,15 @@ class _StoryCard extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: Palette.storyGradient,
             borderRadius: BorderRadius.circular(12.0),
+            boxShadow: Responsive.isDesktop(size)
+                ? const [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 2),
+                      blurRadius: 4.0,
+                    ),
+                  ]
+                : null,
           ),
         ),
         Positioned(
