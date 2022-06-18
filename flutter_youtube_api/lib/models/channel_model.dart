@@ -1,4 +1,4 @@
-import '../data/data.dart';
+import 'package:flutter_youtube_api/models/video_model.dart';
 
 class Channel {
   final String id;

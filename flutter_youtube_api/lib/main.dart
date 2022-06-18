@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_youtube_api/screens/home_screen.dart';
 
 void main() {
   runApp(
@@ -13,13 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter YouTube UI',
+      title: 'Flutter YouTube API',
       theme: ThemeData(
-        brightness: Brightness.dark,
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          selectedItemColor: Colors.white,
-        ),
+        primaryColor: Colors.red,
       ),
+      home: const HomeScreen(),
     );
   }
 }
