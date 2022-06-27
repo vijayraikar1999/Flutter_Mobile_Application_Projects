@@ -27,6 +27,10 @@ class _HomeScreenState extends State<HomeScreen> {
       playlistId: _channel!.uploadPlayListId,
     );
     List<Video> allVideos = _channel!.videos!..addAll(moreVideos);
+    setState(() {
+      _channel!.videos = allVideos;
+    });
+    _isLoading = false;
   }
 
   @override
@@ -43,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         int.parse(_channel!.videoCount) &&
                     scrollDetails.metrics.pixels ==
                         scrollDetails.metrics.maxScrollExtent) {
-                  _loadMOreVideos();
+                  _loadMoreVideos();
                 }
                 return false;
               },
